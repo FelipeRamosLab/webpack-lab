@@ -69,5 +69,6 @@ class HistoricalTickers {
 
 module.exports = {
     KlineStreamModel,
+    KlineDataStreamModel,
     HistoricalTickers
 }

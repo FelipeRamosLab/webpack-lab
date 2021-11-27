@@ -6,7 +6,8 @@ class DemoAccount {
     }){
         this.availableBalance = initialBalance;
         this.balance = this.availableBalance;
-        this.trades = [];
+        this.openedPositions = [];
+        this.closedPositions = [];
     }
 
     async openPosition({symbol, quantity, openPrice}){
@@ -14,18 +15,31 @@ class DemoAccount {
         // const openTradePrice = openPrice //  Number(ticker.data.price);
         const amount = openPrice * quantity;
 
-        this.trades.push(new Position({
+        this.openedPositions.push(new Position({
             symbol,
-            openPrice: 0.04,
+            openPrice: openPrice,
             quantity
         }));
         this.availableBalance = this.availableBalance - amount;
     }
 
+    closePosition(symbol){
+        let current = [...this.openedPositions];
+        
+        current.map((curr, i)=>{
+            if(curr.symbol === symbol) {
+                const spliced = this.openedPositions.splice(i, 1);
+                this.closedPositions.push(spliced[0]);
+                this.availableBalance = this.availableBalance + spliced[0].tradeBalance;
+            }
+        });
+
+    }
+
     updateBalance(){
         let result = 0;
 
-        this.trades.map(trade=>{
+        this.openedPositions.map(trade=>{
             result = result + trade.tradeBalance;
         });
 
@@ -44,7 +58,7 @@ class Position {
         this.openPrice = openPrice;
         this.quantity = quantity;
         this.closePrice;
-        this.pl = 0;
+        this.pl = -0.8;
         this.tradeBalance = (this.openPrice * this.quantity) + this.pl;
     }
     
