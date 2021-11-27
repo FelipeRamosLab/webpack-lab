@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import {Render} from './FRJS';
 
 // Styles
 import './styles/global.scss';
@@ -8,14 +9,14 @@ import Home from './pages/home.html';
 // Declare JQuery as global
 window.$ = $;
 
-function Main(){
+
+async function Main(){
     const $FRJS = $('<div id="__FRJS"></div>');
-    const HomePage = $(Home);
+    const HomePage = await Render({stringHTML: Home});
 
     $FRJS.empty();
-    $FRJS.append(HomePage);
-
-    return $FRJS;
+    $FRJS.html(HomePage);
+    $('body').append($FRJS);
 }
 
-$('body').append(Main());
+Main();
