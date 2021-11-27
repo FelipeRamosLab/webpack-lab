@@ -58,8 +58,8 @@ class Position {
         this.openPrice = openPrice;
         this.quantity = quantity;
         this.closePrice;
-        this.pl = -0.8;
-        this.tradeBalance = (this.openPrice * this.quantity) + this.pl;
+        this.tradeBalance = (this.openPrice * this.quantity);
+        this.pl = -(this.tradeBalance * 0.15);
     }
     
     update(currentPrice){

@@ -8,3 +8,9 @@
 </div>
 
 <button onclick="getSocket()">Iniciar socket</button>
+
+<script>
+    function getSocket(){
+        axios.get('http://localhost:3000/balance').then(res=>alert(res.balance))
+    }
+</script>

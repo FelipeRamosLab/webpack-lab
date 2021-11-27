@@ -32,8 +32,8 @@ class KlineDataStreamModel {
         Q, // Taker buy quote asset volume
         B, // Ignore
     }) {
-        if (t) this.startTime = new Date(t).toLocaleString();
-        if (T) this.closeTime = new Date(T).toLocaleString();
+        if (t) this.startTime = t;
+        if (T) this.closeTime = T;
         if (s) this.symbol = s;
         if (i) this.interval = i;
         if (o) this.openPrice = Number(o);

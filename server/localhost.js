@@ -2,16 +2,15 @@ const binance = require('./jobs/connect');
 const botRules = require('./core/bot-rules');
 
 // Models
-const {KlineStreamModel, KlineDataStreamModel, HistoricalTickers} = require('./models/assets');
+const {KlineStreamModel, HistoricalTickers} = require('./models/assets');
 const {DemoAccount} = require('./models/trades');
 
 // Inicialization
-const account = new DemoAccount({
-    initialBalance: 1000
-});
 let buff = [];
+const account = new DemoAccount({ initialBalance: 1000 });
 const symbolToTrade = 'SANDUSDT';
 const interval = '1m';
+
 binance.klines(symbolToTrade, interval, {
     limit: 3
 }).then(res=>{
@@ -31,9 +30,11 @@ binance.tickerPrice(symbolToTrade).then(res=>{
 
             account.updateBalance();
             trade && trade.update(curr.closePrice);
-            buff.splice(0, 1);
-            buff.push(curr);
 
+            // if(curr.startTime !== buff[buff.length-1].startTime) {
+                buff.splice(0, 1);
+                buff.push(curr);
+            // }
             if(!trade) {
                 if(botRules.topBreak(prev, curr)){
                     account.openPosition({
@@ -43,13 +44,14 @@ binance.tickerPrice(symbolToTrade).then(res=>{
                     });
                 }
             } else {
-                if(botRules.bottomBreak(prev2, prev)){
+                if(botRules.bottomBreak(prev, curr)){
                     account.closePosition(symbolToTrade)
                 }
-                console.log(account.closedPositions, account.balance)
+                console.log(account.closedPositions.length, account.balance.toFixed(2))
                 account.updateBalance();
                 trade.update(curr.closePrice);
             }
+
         }
     }
     const sand = binance.klineWS(symbolToTrade, interval, klineCallbacks);
