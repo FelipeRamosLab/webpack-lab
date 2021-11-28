@@ -1,4 +1,5 @@
 const binance = require('../jobs/connect');
+const {commission} = require('../../binance-config.json');
 
 class DemoAccount {
     constructor({
@@ -11,29 +12,31 @@ class DemoAccount {
     }
 
     async openPosition({symbol, quantity, openPrice}){
-        // const ticker = await binance.tickerPrice(symbol);
-        // const openTradePrice = openPrice //  Number(ticker.data.price);
-        const amount = openPrice * quantity;
-
-        this.openedPositions.push(new Position({
+        const newPosition = new Position({
             symbol,
             openPrice: openPrice,
-            quantity
-        }));
-        this.availableBalance = this.availableBalance - amount;
+            quantity,
+            tradeCommission: commission
+        });
+
+        this.openedPositions.push(newPosition);
+        this.availableBalance = this.availableBalance - newPosition.calculations.grossBalance();
     }
 
-    closePosition(symbol){
+    closePosition(symbol, currentPrice){
         let current = [...this.openedPositions];
         
         current.map((curr, i)=>{
             if(curr.symbol === symbol) {
+                curr.commission += curr.calculations.commission(commission);
+                currentPrice && curr.update(currentPrice);
+
                 const spliced = this.openedPositions.splice(i, 1);
                 this.closedPositions.push(spliced[0]);
                 this.availableBalance = this.availableBalance + spliced[0].tradeBalance;
             }
         });
-
+        this.updateBalance();
     }
 
     updateBalance(){
@@ -52,24 +55,42 @@ class Position {
         symbol,
         openPrice,
         quantity,
+        tradeCommission,
     }){
         this.symbol = symbol;
         this.openTime = Date.now();
         this.openPrice = openPrice;
+        this.currentPrice = this.openPrice;
         this.quantity = quantity;
         this.closePrice;
-        this.tradeBalance = (this.openPrice * this.quantity);
-        this.pl = -(this.tradeBalance * 0.15);
+        this.grossBalance = this.calculations.grossBalance();
+        this.commission = this.calculations.commission(tradeCommission);
+        this.inicialBalance = this.grossBalance;
+        this.pl = this.calculations.pl();
+        this.tradeBalance = this.calculations.tradeBalance();
     }
     
-    update(currentPrice){
-        this.pl = (currentPrice - this.openPrice) * this.quantity;
-        this.tradeBalance = (this.openPrice * this.quantity) + this.pl;
+    update(currentPrice, accountToUpdate){
+        this.currentPrice = currentPrice;
+        this.grossBalance = this.calculations.grossBalance();
+        this.pl = this.calculations.pl();
+        this.tradeBalance = this.calculations.tradeBalance();
+
+        if(accountToUpdate) {
+            accountToUpdate.updateBalance();
+        }
 
         return {
             pl: this.pl,
             tradeBalance: this.tradeBalance
         };
+    }
+
+    calculations = {
+        grossBalance: ()=> this.currentPrice * this.quantity,
+        commission: (tradeCommission)=> this.calculations.grossBalance() * ((tradeCommission || this.commission) / 100),
+        pl: ()=> (this.calculations.grossBalance() - this.inicialBalance) - this.commission,
+        tradeBalance: ()=> this.inicialBalance + this.calculations.pl(),
     }
 }
 
