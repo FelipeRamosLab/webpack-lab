@@ -39,6 +39,7 @@
     "axios": "^0.24.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "technicalindicators": "^3.1.0"
   }
 }

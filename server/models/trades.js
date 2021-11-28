@@ -1,4 +1,3 @@
-const binance = require('../jobs/connect');
 const {commission} = require('../../binance-config.json');
 
 class DemoAccount {
