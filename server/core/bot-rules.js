@@ -3,7 +3,7 @@ const {simpleHighAVG, simpleLowAVG, sma} = require('./math');
 function topBreak(tickers){
     let last = tickers.length - 1;
 
-    if (tickers[last].closePrice > tickers[last-1].highPrice) {
+    if (tickers[last].highPrice > tickers[last-1].highPrice) {
         return true;
     }
 }
@@ -11,7 +11,7 @@ function topBreak(tickers){
 function bottomBreak(tickers){
     let last = tickers.length - 1;
 
-    if (tickers[last].closePrice < tickers[last-1].lowPrice) {
+    if (tickers[last].lowPrice < tickers[last-1].lowPrice) {
         return true;
     }
 }
