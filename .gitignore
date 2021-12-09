@@ -5,3 +5,5 @@ dist
 
 # FRJS - Exceptions
 !dist/index.html
+
+access-key.json
