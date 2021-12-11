@@ -11,27 +11,38 @@ export async function loadComponents(htmlString = ''){
     
             const component = $components[i];
             const path = component.getAttribute('template');
-    
-            const compHtmlLoaded = await import(`../../${FRJSConfig.paths.templates}/${path}.html`);
-            const compHtmlString = compHtmlLoaded.default;
-            const checkInsideComponents = await loadComponents(
-                renderingSpecialTag('div', $components, compHtmlString).prop('outerHTML')
-            );
+            
+            try {
+                const compHtmlLoaded = await import(`../../${FRJSConfig.paths.templates}/${path}.html`);
+                const compHtmlString = compHtmlLoaded.default;
 
-            component.outerHTML = checkInsideComponents[0].outerHTML;
+                // Checking if the component loaded have another components inside
+                const checkInsideComponents = await loadComponents(
+                    convertComponent('div', $(component), compHtmlString).prop('outerHTML')
+                );
+
+                component.outerHTML = checkInsideComponents[0].outerHTML;
+            } catch(err){
+                console.error(`An error occured on the component loading in the path "${path}"!`);
+            }
         }
     }
     return $html;
 }
 
-export function renderingSpecialTag(newTagName, $node, newHtmlString){
-    if(!$node.length) throw new Error(`The parameter $Node is empty`);
+export function convertComponent(newTagName, node, newHtmlString){
+    if(!node.length) throw new Error(`The parameter node is empty!`);
     let $newNode = $(`<${newTagName}></${newTagName}>`);
     
-    for(let i = 0; i < $node.prop('attributes').length; i++){
-        $newNode.attr($node[0].attributes[i].name, $node[0].attributes[i].value);
+    for(let i = 0; i < node.prop('attributes').length; i++){
+        $newNode.attr(node[0].attributes[i].name, node[0].attributes[i].value);
+    }
+    $newNode.html(newHtmlString);
+
+    let children = $($newNode).find('children');
+    for(let i = 0; i < children.length; i++){
+        children[i].outerHTML = node[0].innerHTML;
     }
 
-    $newNode.html(newHtmlString);
     return $newNode;
 }
