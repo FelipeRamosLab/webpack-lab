@@ -1,0 +1,7 @@
+{
+    "projectName": "FRJS Development",
+    "paths": {
+        "pages": "src/pages",
+        "templates": "src/templates"
+    }
+}
