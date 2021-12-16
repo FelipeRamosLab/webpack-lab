@@ -32,8 +32,13 @@ function sma(data, period){
     return SMA.calculate({period, values});
 }
 
+function calcPorcentage(total, ref){
+    return ref * 100 / total;
+}
+
 module.exports = {
     simpleHighAVG,
     simpleLowAVG,
-    sma
+    sma,
+    calcPorcentage
 };

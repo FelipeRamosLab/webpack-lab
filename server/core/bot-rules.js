@@ -1,4 +1,4 @@
-const {simpleHighAVG, simpleLowAVG, sma} = require('./math');
+const {simpleHighAVG, simpleLowAVG, sma, calcPorcentage} = require('./math');
 
 function topBreak(tickers){
     let last = tickers.length - 1;
@@ -13,6 +13,18 @@ function bottomBreak(tickers){
 
     if (tickers[last].lowPrice < tickers[last-1].lowPrice) {
         return true;
+    }
+}
+
+function preservingProfit(tickers, currentTrade){
+    const last = tickers[tickers.length-1];
+    const range = (last.highPrice - last.lowPrice).toFixed(10);
+    const topDist = (last.highPrice - last.closePrice).toFixed(10);
+    
+    if(currentTrade.plPercentage > 3 && calcPorcentage(range, topDist) > 50) {
+        return true;    
+    } else {
+        return false;
     }
 }
 
@@ -55,6 +67,7 @@ function crossSma({data, period, direction}){
 module.exports = {
     topBreak,
     bottomBreak,
+    preservingProfit,
     highAvgBreak,
     lowAvgBreak,
     crossSma

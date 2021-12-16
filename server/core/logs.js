@@ -7,6 +7,14 @@ const log = {
             'Close positions: ' + account.closedPositions.length + '\n' +
             '--------------------------------------------------------------'
         );
+    },
+    assetCurrentData: ({symbolToTrade, interval, curr})=>{
+        console.log('--------------------------------------------');
+        console.log('Symbol: ' + symbolToTrade);
+        console.log('Interval: ' + interval);
+        console.log('Time: ' + Date());
+        console.log('Current price: ' + curr.closePrice);
+        console.log('--------------------------------------------');
     }
 }
 

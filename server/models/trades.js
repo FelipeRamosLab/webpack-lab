@@ -1,4 +1,5 @@
 const {commission} = require('../../binance-config.json');
+const {calcPorcentage} = require('../core/math');
 
 class DemoAccount {
     constructor({
@@ -66,6 +67,7 @@ class Position {
         this.commission = this.calculations.commission(tradeCommission);
         this.inicialBalance = this.grossBalance;
         this.pl = this.calculations.pl();
+        this.plPorcentage = calcPorcentage(this.openPrice, this.pl);
         this.tradeBalance = this.calculations.tradeBalance();
     }
     
@@ -73,6 +75,7 @@ class Position {
         this.currentPrice = currentPrice;
         this.grossBalance = this.calculations.grossBalance();
         this.pl = this.calculations.pl();
+        this.plPorcentage = calcPorcentage(this.openPrice, this.pl);
         this.tradeBalance = this.calculations.tradeBalance();
 
         if(accountToUpdate) {
