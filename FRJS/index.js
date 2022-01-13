@@ -1,4 +1,5 @@
 import {loadComponents} from './core/index';
+// import MutableValues from './core/mutables';
 
 // Models
 import PageModel from './models/pageModel';
@@ -35,6 +36,5 @@ export default class FRJS {
         } catch(err){
             console.error('An error occurs during the RenderPage process!', err);
         }
-
     }
 }
