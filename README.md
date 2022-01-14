@@ -1,13 +1,7 @@
-# webpack-lab
-This is a laboratory for testing and study webpack applications.
+# FRJS Framework (MutableJS)
 
-## Release v0.1.0 beta
-- Webpack 5
-- JQuery
-- Lodash
-- Express.js
-- CSS and SCSS load
-- Images load
-- CVS, XML and JSON load
-- Webpack Web Dev Server
-- HTML load
+## Mutable attributes
+- `mutable` - The mutable name
+- `mutable-type` - The mutable type of data. Ex: 'string' | 'number' | 'array' | 'object' | 'html' | 'button'
+- `mutable-listen` - Any event that you wanna use to trigger the mutable bridge separated by colons without spaces. Ex: 'keyup,change' | 'click'
+- `mutable-dependecies` - If you want

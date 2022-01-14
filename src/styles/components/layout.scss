@@ -1,0 +1,17 @@
+.container {
+    width: 98%;
+    max-width: 70rem;
+    margin: 0 auto;
+}
+
+.card {
+    border-radius: $m-size;
+    background-color: $primary;
+    padding: $m-size;
+    margin-bottom: $m-size;
+    text-align: center;
+
+    .title {
+        font-size: 1.5rem;
+    }
+}

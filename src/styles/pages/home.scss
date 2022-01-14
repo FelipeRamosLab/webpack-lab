@@ -1,0 +1,39 @@
+.ex1 {
+    $radius: 5rem;
+
+    .counter-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .btn {
+        font-size: 3rem;
+        width: $radius;
+        height: $radius;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+    }
+
+    .counter-ex1 {
+        font-size: 5rem;
+        margin: 1%;
+        min-width: 10rem;
+        text-align: center;
+        user-select: none;
+    }
+}
+
+.ex2 {
+    .btn {
+        background-color: $tertiary;
+    }
+
+    .result {
+        font-size: 1.8rem;
+    }
+}

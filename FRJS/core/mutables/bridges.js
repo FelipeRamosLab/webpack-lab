@@ -1,14 +1,37 @@
 export default {
-    result: (input, core)=>{
-        return core.get('numOne') * core.get('numTwo');
+    counterEX1: (input, core)=>{
+        return input
     },
-    numThree: (input, core)=>{
-        return (core.get('numOne') * core.get('numTwo'));
+    increaseEX1: (input, core)=>{
+        var current = core.get('counterEX1');
+        core.update('counterEX1', current+1);
     },
-    numFour: (input, core)=>{
-        return (core.get('numThree') * core.get('numTwo'));
+    decreaseEX1: (input, core)=>{
+        var current = core.get('counterEX1');
+        core.update('counterEX1', current-1);
     },
-    change: (input, core)=>{
-        core.update('contentWrap', $(`<span mutable="numTwo" mutable-type="number">teste</span>`));
-    }
+    calculateEX2: (input, core)=>{
+        let result = 0;
+
+        switch(core.get('operationEX2')){
+            case '+':{
+                result = core.get('firstNumberEX2') + core.get('secondNumberEX2');
+                break;
+            }
+            case '-': {
+                result = core.get('firstNumberEX2') - core.get('secondNumberEX2');
+                break;
+            }
+            case '*':{
+                result = core.get('firstNumberEX2') * core.get('secondNumberEX2');
+                break;
+            }
+            case '/':{
+                result = core.get('firstNumberEX2') / core.get('secondNumberEX2');
+                break;
+            }
+        }
+        // core.update('resultEX2', result);
+        return result
+    },
 }

@@ -56,8 +56,8 @@ export default class MutableValues {
                     value: mutableValue
                 };
             } else {
-                // mutables[mutableName].value = bridges[mutableName] ? bridges[mutableName](mutableValue, internal) : mutableValue;
-                mutables[mutableName].value = mutableValue;
+                mutables[mutableName].value = bridges[mutableName] ? bridges[mutableName](mutableValue, internal) : mutableValue;
+                // mutables[mutableName].value = mutableValue;
             }
 
             mutableListen.split(',').map(function (listen) {
@@ -97,15 +97,17 @@ export default class MutableValues {
 
         switch (mutable.type) {
             case 'string': {
-                mutable.value = this.bridges[name] ? this.bridges[name](newValue, this) : String(newValue || mutable.value);
+                mutable.value = this.bridges[name] ? this.bridges[name](newValue, internal) : String(newValue || mutable.value);
                 break;
             }
             case 'number': {
-                mutable.value = this.bridges[name] ? this.bridges[name](newValue, this) : Number(newValue || mutable.value);
+                var inputNumber = Number(newValue || mutable.value)
+                var bridge = this.bridges[name];
+                mutable.value = bridge ? Number(bridge(inputNumber, internal)) : inputNumber;
                 break;
             }
             case 'button': {
-                this.bridges[name] && this.bridges[name](newValue, this);
+                this.bridges[name] && this.bridges[name](newValue || mutable.value, internal);
                 break;
             }
             case 'html': {

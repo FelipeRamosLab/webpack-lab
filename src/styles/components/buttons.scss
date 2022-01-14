@@ -1,0 +1,15 @@
+.btn {
+    background-color: $secundary;
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 0.4rem;
+    color: $text-color;
+    cursor: pointer;
+    transition: all 200ms;
+    text-transform: uppercase;
+    user-select: none;
+
+    &:active {
+        transform: scale(0.98);
+    }
+}
