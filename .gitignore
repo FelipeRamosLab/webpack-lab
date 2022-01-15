@@ -2,6 +2,7 @@ node_modules
 
 # FRJS
 dist
+mutable-js
 
 # FRJS - Exceptions
 !dist/index.html
