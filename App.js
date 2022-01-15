@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import FRJSAppCore from './FRJS';
-import MutableValues from './FRJS/core/mutables';
+import MutableJS from './mutable-js';
+import bridges from './FRJS/core/mutableJS/bridges';
 
 // Styles
 import './src/styles/global.scss';
@@ -19,5 +20,15 @@ window.FRJSApp = new FRJSAppCore({
 
 (async()=>{
     await window.FRJSApp.RenderPage('home');
-    window.mutableValues = new MutableValues();
+    new MutableJS({ 
+        name: 'mutableJS', 
+        bridges,
+        store: [
+            {
+                name: 'result',
+                type: 'number',
+                value: 50
+            }
+        ]
+    });
 })();
