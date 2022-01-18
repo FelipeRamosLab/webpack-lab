@@ -6,3 +6,6 @@ mutable-js
 
 # FRJS - Exceptions
 !dist/index.html
+
+# Local Netlify folder
+.netlify

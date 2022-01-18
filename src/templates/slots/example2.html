@@ -1,35 +1,27 @@
-<component template="components/card">
-    <h2 class="title">Exemple 2 - Sync values</h2>
+<h2 class="title">Exemple 2 - Sync values</h2>
 
-    <input 
-        type="number" 
-        inputmode="numeric" 
-        value="1" 
-        mutable="firstNumberEX2" 
-        mutable-type="number" 
-        mutable-listen="change,keyup" 
-        mutable-dependencies="calculateEX2"
-    />
-    <select 
-        value="+" 
-        mutable="operationEX2" 
-        mutable-listen="change" 
-        mutable-dependencies="calculateEX2"
-    >
-        <option value="+">+</option>
-        <option value="-">-</option>
-        <option value="*">*</option>
-        <option value="/">/</option>
-    </select>
-    <input 
-        type="number" 
-        inputmode="numeric" 
-        value="1" 
-        mutable="secondNumberEX2" 
-        mutable-type="number" 
-        mutable-listen="change,keyup" 
-        mutable-dependencies="calculateEX2"
-    />
+<input 
+    type="number" 
+    inputmode="numeric" 
+    mutable="firstNumberEX2" 
+    mutable-value="" 
+    mutable-type="number"
+/>
+<select 
+    value="+" 
+    mutable="operationEX2"
+>
+    <option value="+">+</option>
+    <option value="-">-</option>
+    <option value="*">*</option>
+    <option value="/">/</option>
+</select>
+<input 
+    type="number" 
+    inputmode="numeric" 
+    mutable="secondNumberEX2" 
+    mutable-value="" 
+    mutable-type="number"
+/>
 
-    <span class="result"> = <span mutable="calculateEX2" mutable-type="number"></span></span>
-</component>
+<p class="result" mutable="resultEX2" mutable-dependencies="calculateEX2"></p>

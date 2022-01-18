@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
 
-app.use(express.static('dist'));
+app.use(express.static('public'));
 
-app.listen(8000, ()=>{
-    console.log('\n> The app is currently running on: http://localhost:8000\n');
+app.listen(80, ()=>{
+    console.log('\n> The app is currently running on: http://localhost:80\n');
 });

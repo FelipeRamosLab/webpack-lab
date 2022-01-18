@@ -23,12 +23,8 @@ window.FRJSApp = new FRJSAppCore({
     new MutableJS({ 
         name: 'mutableJS', 
         bridges,
-        store: [
-            {
-                name: 'result',
-                type: 'number',
-                value: 50
-            }
+        mutableStore: [
+            {name: 'calculateEX2', type: 'number', dependencies: ['firstNumberEX2', 'operationEX2', 'secondNumberEX2']}
         ]
     });
 })();
