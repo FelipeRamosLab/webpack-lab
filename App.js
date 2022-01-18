@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import FRJSAppCore from './FRJS';
 import MutableJS from './mutable-js';
-import bridges from './FRJS/core/mutableJS/bridges';
+import bridges from './src/mutableJS/bridges';
 
 // Styles
 import './src/styles/global.scss';
