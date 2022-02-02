@@ -37,3 +37,19 @@
         font-size: 1.8rem;
     }
 }
+
+.ex3 {
+    .flex-table {
+        max-width: 350px;
+        margin: 0 auto;
+
+        .row .column:first-child {
+            flex: 1;
+        }
+    
+        .row .column:last-child {
+            flex: 4;
+            justify-content: flex-end;
+        }
+    }
+}
